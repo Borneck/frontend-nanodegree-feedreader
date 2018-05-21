@@ -47,12 +47,9 @@ $(function() {
 
 /* New test suite named "The menu" */
 describe('The menu', function(){
-    // Created class variables in this scope 
-    var menu = document.querySelector('body.menu-hidden');
-    var slideMenu = document.querySelector('.slide-menu');
     // This test ensures the menu element is hidden by default.
     it('hidden by default', function(){
-        expect(menu.className).toMatch("menu-hidden");
+        expect($('body').hasClass('menu-hidden')).toBe(true);
     });
 
     // This test that ensures the menu changes visibility when the menu icon is clicked. 
@@ -61,11 +58,10 @@ describe('The menu', function(){
         // This test does the menu Display when cklicked.
         hamburgerMenu.click();
         
-        expect(menu.className).not.toMatch("menu-hidden");
+        expect($('body').hasClass('menu-hidden')).toBe(false);
         // This test does it hide when cklicked again
         hamburgerMenu.click();
-        
-        expect(menu.className).toMatch("menu-hidden");
+        expect($('body').hasClass('menu-hidden')).toBe(true);
     });
 });
 
@@ -75,9 +71,7 @@ describe('Initial Enties', function(){
     var feedClass = document.querySelector('.feed');
     // The Jasmine's beforeEach and asynchronous done() function.
     beforeEach(function(done){
-        loadFeed(0,function(){
-            done();
-        });
+        loadFeed(0,done());
     });
     // This is the test that ensures when the loadFeed function is called and work
     it('loadFeed function is called after one', function(done){
@@ -97,10 +91,14 @@ describe('Initial Enties', function(){
         var secondFeed;
         // The Jasmine's beforeEach and asynchronous done() function.
         beforeEach(function(done){
-            firstFeed = feed.innerHTML
-            loadFeed(1, function(){
-                done();
+            loadFeed(0, function(){
+                firstFeed = feed.innerHTML;            
+                    
+                loadFeed(1, function(){
+                    secondFeed = feed.innerHTML;
+                    done();
             });
+        })
         });
         // This test actually changes the content in the loadFeed function
         it('Changes the feed content', function(done){
