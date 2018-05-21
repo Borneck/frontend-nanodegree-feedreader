@@ -30,7 +30,7 @@ $(function() {
             allFeeds.forEach(function(feed){
                 expect(feed.url).toBeDefined();
                 expect(feed.length).not.toBe(0);
-                expect(feed.url).toMatch(/^(http|https):\/\//);
+                expect(feed.url).toMatch(/^(http|https)/);
             }); 
         });
         /* This test write that loops through each feed
