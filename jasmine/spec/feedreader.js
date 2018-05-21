@@ -3,11 +3,6 @@
  * This is the spec file that Jasmine will read and contains
  * all of the tests that will be run against your application.
  */
-
-/* We're placing all of our tests within the $() function,
- * since some of these tests may require DOM elements. We want
- * to ensure they don't run until the DOM is ready.
- */
 $(function() {
     /* This is our first test suite - a test suite just contains
     * a related set of tests. This suite is all about the RSS
@@ -27,46 +22,95 @@ $(function() {
         });
 
 
-        /* TODO: Write a test that loops through each feed
+        /* This test write a loops through each feed
          * in the allFeeds object and ensures it has a URL defined
          * and that the URL is not empty.
          */
-
-
-        /* TODO: Write a test that loops through each feed
+        it('url ok', function(){
+            allFeeds.forEach(function(feed){
+                expect(feed.url).toBeDefined();
+                expect(feed.length).not.toBe(0);
+                expect(feed.url).toMatch(/^(http|https):\/\//);
+            }); 
+        });
+        /* This test write that loops through each feed
          * in the allFeeds object and ensures it has a name defined
          * and that the name is not empty.
          */
+        it('name ok', function(){
+           allFeeds.forEach(function(feedName){
+                expect(feedName.name).toBeDefined();
+                expect(feedName.name).not.toBe('');
+           }); 
+        });
     });
 
+/* New test suite named "The menu" */
+describe('The menu', function(){
+    // Created class variables in this scope 
+    var menu = document.querySelector('body.menu-hidden');
+    var slideMenu = document.querySelector('.slide-menu');
+    // This test ensures the menu element is hidden by default.
+    it('hidden by default', function(){
+        expect(menu.className).toMatch("menu-hidden");
+    });
 
-    /* TODO: Write a new test suite named "The menu" */
+    // This test that ensures the menu changes visibility when the menu icon is clicked. 
+    it('visibility when was clicked ,Toggle on', function(){
+        var hamburgerMenu = document.querySelector('.menu-icon-link');
+        // This test does the menu Display when cklicked.
+        hamburgerMenu.click();
+        
+        expect(menu.className).not.toMatch("menu-hidden");
+        // This test does it hide when cklicked again
+        hamburgerMenu.click();
+        
+        expect(menu.className).toMatch("menu-hidden");
+    });
+});
 
-        /* TODO: Write a test that ensures the menu element is
-         * hidden by default. You'll have to analyze the HTML and
-         * the CSS to determine how we're performing the
-         * hiding/showing of the menu element.
-         */
-
-         /* TODO: Write a test that ensures the menu changes
-          * visibility when the menu icon is clicked. This test
-          * should have two expectations: does the menu display when
-          * clicked and does it hide when clicked again.
-          */
-
-    /* TODO: Write a new test suite named "Initial Entries" */
-
-        /* TODO: Write a test that ensures when the loadFeed
-         * function is called and completes its work, there is at least
-         * a single .entry element within the .feed container.
-         * Remember, loadFeed() is asynchronous so this test will require
-         * the use of Jasmine's beforeEach and asynchronous done() function.
-         */
-
-    /* TODO: Write a new test suite named "New Feed Selection" */
-
-        /* TODO: Write a test that ensures when a new feed is loaded
-         * by the loadFeed function that the content actually changes.
-         * Remember, loadFeed() is asynchronous.
-         */
+    /* New test suite named "Initial Entries" */
+describe('Initial Enties', function(){
+    // Created class variables in this scope
+    var feedClass = document.querySelector('.feed');
+    // The Jasmine's beforeEach and asynchronous done() function.
+    beforeEach(function(done){
+        loadFeed(0,function(){
+            done();
+        });
+    });
+    // This is the test that ensures when the loadFeed function is called and work
+    it('loadFeed function is called after one', function(done){
+        var entryFeed = feedClass.querySelectorAll('.entry').length;
+        
+        expect(entryFeed).toBe(0);
+        
+        done();
+    });
+});
+    
+    /*New test suite named "New Feed Selection" */
+    describe('New Feed Selection', function(){
+        // Created class variables an variable in this scope
+        var feed = document.querySelector('.feed');
+        var firstFeed;
+        var secondFeed;
+        // The Jasmine's beforeEach and asynchronous done() function.
+        beforeEach(function(done){
+            firstFeed = feed.innerHTML
+            loadFeed(1, function(){
+                done();
+            });
+        });
+        // This test actually changes the content in the loadFeed function
+        it('Changes the feed content', function(done){
+            secondFeed = feed.innerHTML;
+            
+            expect(firstFeed).toBeDefined();
+            expect(secondFeed).toBeDefined();
+            expect(firstFeed).not.toEqual(secondFeed);
+            
+            done();
+        });
+    });
 }());
