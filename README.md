@@ -1,10 +1,10 @@
-#Feedreader Test with Jasmine
+# **Feedreader Test with Jasmine**
 
 ## Project Overview
 
 In this project you are given a web-based application that reads RSS feeds. The original developer of this application clearly saw the value in testing, they've already included [Jasmine](http://jasmine.github.io/) and even started writing their first test suite! Unfortunately, they decided to move on to start their own company and we're now left with an application with an incomplete test suite. That's where you come in.
 
-##Steps to Run
+## Steps to Run
 1. Download the repo.
 2. Open index.html in the browser of your choice.
 3. After loading, the test results should be displayed at the bottom of the page.
@@ -12,7 +12,7 @@ In this project you are given a web-based application that reads RSS feeds. The 
 
 ## What will be tested?
 
-###General feed test
+### General feed test
 1.Test if there is a value in the allFeed variable or is it undefind.
 2.Test if a url with http / s: request.
 3.Test if a name has been specified.
